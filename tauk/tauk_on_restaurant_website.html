@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAUK ON</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--black:#0d0d0d;--dark:#111111;--card:#1a1a1a;--card2:#222222;
+--orange:#ff7a00;--yellow:#ffc400;--white:#ffffff;--gray:#888;
+--border:rgba(255,122,0,0.15);
+}
+body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden}
+.bebas{font-family:'Bebas Neue',cursive}
+.barlow-cond{font-family:'Barlow Condensed',sans-serif}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,13,13,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:'Bebas Neue',cursive;font-size:2rem;background:linear-gradient(90deg,var(--orange),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px;cursor:pointer}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.7);text-decoration:none;font-weight:600;font-size:0.85rem;letter-spacing:1px;text-transform:uppercase;transition:color 0.2s;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{color:var(--orange)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.cart-btn{background:var(--orange);color:var(--black);border:none;padding:0.5rem 1.2rem;border-radius:25px;font-weight:700;font-size:0.85rem;cursor:pointer;display:flex;align-items:center;gap:0.5rem;transition:transform 0.2s,background 0.2s}
+.cart-btn:hover{background:var(--yellow);transform:scale(1.05)}
+.cart-count{background:var(--black);color:var(--yellow);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(255,122,0,0.08) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(255,196,0,0.06) 0%,transparent 50%),var(--black)}
+.fire-ring{position:absolute;width:600px;height:600px;border-radius:50%;border:1px solid rgba(255,122,0,0.1);animation:pulse 3s ease-in-out infinite}
+.fire-ring:nth-child(2){width:800px;height:800px;animation-delay:1s}
+.fire-ring:nth-child(3){width:1000px;height:1000px;animation-delay:2s}
+@keyframes pulse{0%,100%{opacity:0.3;transform:scale(1)}50%{opacity:0.7;transform:scale(1.02)}}
+.hero-badge{background:rgba(255,122,0,0.15);border:1px solid rgba(255,122,0,0.3);color:var(--orange);padding:0.4rem 1.2rem;border-radius:25px;font-size:0.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:1.5rem;display:inline-block}
+.hero h1{font-family:'Bebas Neue',cursive;font-size:clamp(4rem,12vw,10rem);line-height:0.9;letter-spacing:4px;margin-bottom:1rem}
+.hero h1 span{background:linear-gradient(135deg,var(--orange),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:1.1rem;color:rgba(255,255,255,0.6);max-width:500px;margin:0 auto 2.5rem;letter-spacing:2px;text-transform:uppercase;font-weight:500}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,var(--orange),var(--yellow));color:var(--black);border:none;padding:0.9rem 2.5rem;border-radius:30px;font-weight:800;font-size:1rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,122,0,0.4)}
+.btn-outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.3);padding:0.9rem 2.5rem;border-radius:30px;font-weight:700;font-size:1rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.2s}
+.btn-outline:hover{border-color:var(--orange);color:var(--orange)}
+.food-float{display:flex;gap:1.5rem;margin-top:3rem;justify-content:center;flex-wrap:wrap}
+.food-chip{background:var(--card);border:1px solid var(--border);border-radius:50px;padding:0.6rem 1.2rem;font-size:1.2rem;animation:float 3s ease-in-out infinite;cursor:pointer;transition:border-color 0.2s}
+.food-chip:hover{border-color:var(--orange)}
+.food-chip:nth-child(2){animation-delay:0.5s}
+.food-chip:nth-child(3){animation-delay:1s}
+.food-chip:nth-child(4){animation-delay:1.5s}
+.food-chip:nth-child(5){animation-delay:2s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* STATS */
+.stats{display:flex;justify-content:center;gap:3rem;padding:3rem 2rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-family:'Bebas Neue',cursive;font-size:3rem;background:linear-gradient(135deg,var(--orange),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.stat-label{color:var(--gray);font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;margin-top:0.25rem}
+
+/* SECTION */
+section{padding:5rem 2rem;max-width:1200px;margin:0 auto}
+.section-label{color:var(--orange);font-size:0.8rem;letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:0.75rem}
+.section-title{font-family:'Bebas Neue',cursive;font-size:clamp(2.5rem,6vw,4.5rem);line-height:1;margin-bottom:1rem}
+
+/* MENU */
+.categories{display:flex;gap:0.75rem;overflow-x:auto;padding-bottom:1rem;margin-bottom:2.5rem;scrollbar-width:none}
+.categories::-webkit-scrollbar{display:none}
+.cat-btn{background:var(--card);border:1px solid var(--border);color:var(--gray);padding:0.6rem 1.4rem;border-radius:25px;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;transition:all 0.2s;letter-spacing:0.5px}
+.cat-btn.active,.cat-btn:hover{background:var(--orange);color:var(--black);border-color:var(--orange)}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
+.food-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:transform 0.2s,border-color 0.2s;cursor:pointer}
+.food-card:hover{transform:translateY(-4px);border-color:rgba(255,122,0,0.4)}
+.food-img{width:100%;height:180px;object-fit:cover;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:4rem}
+.food-body{padding:1.25rem}
+.food-tags{display:flex;gap:0.5rem;margin-bottom:0.75rem;flex-wrap:wrap}
+.tag{padding:0.2rem 0.6rem;border-radius:10px;font-size:0.7rem;font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
+.tag-bestseller{background:rgba(255,122,0,0.15);color:var(--orange);border:1px solid rgba(255,122,0,0.3)}
+.tag-new{background:rgba(255,196,0,0.15);color:var(--yellow);border:1px solid rgba(255,196,0,0.3)}
+.tag-hot{background:rgba(220,38,38,0.15);color:#f87171;border:1px solid rgba(220,38,38,0.3)}
+.tag-veg{background:rgba(34,197,94,0.15);color:#4ade80;border:1px solid rgba(34,197,94,0.3)}
+.food-name{font-weight:800;font-size:1.1rem;margin-bottom:0.25rem}
+.food-desc{color:var(--gray);font-size:0.85rem;margin-bottom:1rem;line-height:1.5}
+.food-footer{display:flex;align-items:center;justify-content:space-between}
+.food-price{font-family:'Bebas Neue',cursive;font-size:1.8rem;color:var(--orange)}
+.food-price span{font-family:'Barlow',sans-serif;font-size:0.8rem;color:var(--gray);margin-left:2px}
+.add-btn{background:var(--orange);color:var(--black);border:none;width:40px;height:40px;border-radius:50%;font-size:1.4rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform 0.15s,background 0.2s}
+.add-btn:hover{background:var(--yellow);transform:scale(1.1)}
+.spice{font-size:0.75rem;color:var(--gray)}
+
+/* DEALS */
+.deals-full{background:linear-gradient(0deg,var(--black),transparent);width:100%;padding:5rem 2rem}
+.deals-inner{max-width:1200px;margin:0 auto}
+.deals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-top:2.5rem}
+.deal-card{border-radius:20px;padding:2rem;position:relative;overflow:hidden;cursor:pointer;transition:transform 0.2s}
+.deal-card:hover{transform:scale(1.02)}
+.deal-card.orange{background:linear-gradient(135deg,rgba(255,122,0,0.2),rgba(255,196,0,0.1));border:1px solid rgba(255,122,0,0.3)}
+.deal-card.red{background:linear-gradient(135deg,rgba(220,38,38,0.15),rgba(255,122,0,0.1));border:1px solid rgba(220,38,38,0.3)}
+.deal-card.purple{background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(255,122,0,0.1));border:1px solid rgba(139,92,246,0.3)}
+.deal-icon{font-size:3rem;margin-bottom:1rem}
+.deal-title{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;text-transform:uppercase;margin-bottom:0.5rem}
+.deal-desc{color:rgba(255,255,255,0.6);font-size:0.9rem;margin-bottom:1.5rem}
+.deal-timer{font-family:'Bebas Neue',cursive;font-size:2rem;color:var(--orange);letter-spacing:4px}
+.deal-timer-label{font-size:0.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:1px}
+.deal-badge{position:absolute;top:1.5rem;right:1.5rem;background:var(--orange);color:var(--black);padding:0.4rem 0.8rem;border-radius:20px;font-weight:800;font-size:0.85rem}
+
+/* REVIEWS */
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-top:2.5rem}
+.review-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.5rem}
+.stars{color:var(--yellow);font-size:1rem;margin-bottom:0.75rem}
+.review-text{color:rgba(255,255,255,0.8);font-size:0.95rem;line-height:1.6;margin-bottom:1rem;font-style:italic}
+.reviewer{display:flex;align-items:center;gap:0.75rem}
+.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--yellow));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.85rem;color:var(--black)}
+.reviewer-name{font-weight:700;font-size:0.9rem}
+.reviewer-sub{color:var(--gray);font-size:0.8rem}
+
+/* CART PANEL */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-panel{position:fixed;top:0;right:0;width:420px;max-width:100vw;height:100vh;background:var(--dark);border-left:1px solid var(--border);z-index:201;transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column}
+.cart-panel.open{transform:translateX(0)}
+.cart-header{padding:1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.cart-header h2{font-family:'Bebas Neue',cursive;font-size:1.8rem;letter-spacing:2px}
+.close-btn{background:var(--card);border:1px solid var(--border);color:var(--white);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+.cart-items{flex:1;overflow-y:auto;padding:1rem}
+.cart-item{display:flex;align-items:center;gap:1rem;padding:1rem;background:var(--card);border-radius:14px;margin-bottom:0.75rem}
+.cart-emoji{font-size:2rem;width:50px;height:50px;background:var(--card2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cart-item-info{flex:1}
+.cart-item-name{font-weight:700;font-size:0.95rem;margin-bottom:0.2rem}
+.cart-item-price{color:var(--orange);font-weight:700}
+.qty-ctrl{display:flex;align-items:center;gap:0.5rem;margin-top:0.5rem}
+.qty-btn{background:var(--card2);border:1px solid var(--border);color:var(--white);width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background 0.15s}
+.qty-btn:hover{background:var(--orange);color:var(--black);border-color:var(--orange)}
+.qty-num{font-weight:700;min-width:20px;text-align:center}
+.cart-footer{padding:1.5rem;border-top:1px solid var(--border)}
+.promo-row{display:flex;gap:0.75rem;margin-bottom:1.25rem}
+.promo-input{flex:1;background:var(--card);border:1px solid var(--border);color:var(--white);padding:0.6rem 1rem;border-radius:10px;font-size:0.9rem;outline:none}
+.promo-input:focus{border-color:var(--orange)}
+.promo-input::placeholder{color:var(--gray)}
+.promo-apply{background:var(--card2);border:1px solid var(--border);color:var(--orange);padding:0.6rem 1rem;border-radius:10px;cursor:pointer;font-weight:700;white-space:nowrap;transition:background 0.2s}
+.promo-apply:hover{background:var(--orange);color:var(--black);border-color:var(--orange)}
+.total-row{display:flex;justify-content:space-between;margin-bottom:0.5rem;color:rgba(255,255,255,0.7)}
+.total-final{display:flex;justify-content:space-between;font-weight:800;font-size:1.1rem;margin:0.75rem 0 1.25rem;padding-top:0.75rem;border-top:1px solid var(--border)}
+.total-final span:last-child{color:var(--orange);font-family:'Bebas Neue',cursive;font-size:1.5rem}
+.checkout-btn{width:100%;background:linear-gradient(135deg,var(--orange),var(--yellow));color:var(--black);border:none;padding:1rem;border-radius:14px;font-weight:800;font-size:1rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:opacity 0.2s,transform 0.2s}
+.checkout-btn:hover{opacity:0.9;transform:scale(1.01)}
+.empty-cart{text-align:center;padding:3rem 1rem;color:var(--gray)}
+.empty-cart div{font-size:4rem;margin-bottom:1rem}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid rgba(255,122,0,0.4);color:var(--white);padding:0.9rem 1.5rem;border-radius:14px;font-weight:600;z-index:300;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* FOOTER */
+footer{background:var(--black);border-top:1px solid var(--border);padding:3rem 2rem;text-align:center}
+.footer-logo{font-family:'Bebas Neue',cursive;font-size:3rem;background:linear-gradient(90deg,var(--orange),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem}
+.footer-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
+.footer-links a{color:var(--gray);text-decoration:none;font-size:0.85rem;letter-spacing:1px;transition:color 0.2s;cursor:pointer}
+.footer-links a:hover{color:var(--orange)}
+.footer-copy{color:rgba(255,255,255,0.3);font-size:0.8rem}
+.social-row{display:flex;gap:1rem;justify-content:center;margin-bottom:1.5rem}
+.social-icon{width:40px;height:40px;background:var(--card);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;cursor:pointer;transition:all 0.2s}
+.social-icon:hover{background:var(--orange);border-color:var(--orange)}
+
+/* LIVE COUNTER */
+.live-bar{background:rgba(255,122,0,0.08);border:1px solid rgba(255,122,0,0.2);border-radius:50px;padding:0.5rem 1.5rem;display:inline-flex;align-items:center;gap:0.75rem;font-size:0.85rem;color:rgba(255,255,255,0.7);margin-bottom:2rem}
+.live-dot{width:8px;height:8px;background:var(--orange);border-radius:50%;animation:blink 1s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* SEARCH */
+.search-wrap{position:relative;margin-bottom:2rem;max-width:400px}
+.search-input{width:100%;background:var(--card);border:1px solid var(--border);color:var(--white);padding:0.8rem 1rem 0.8rem 3rem;border-radius:12px;font-size:0.95rem;outline:none;transition:border-color 0.2s}
+.search-input:focus{border-color:var(--orange)}
+.search-input::placeholder{color:var(--gray)}
+.search-icon{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--gray);font-size:1rem}
+
+/* PAGE SECTIONS */
+.page{display:none}
+.page.active{display:block}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:2.5rem}
+.about-text p{color:rgba(255,255,255,0.7);line-height:1.8;margin-bottom:1rem}
+.about-img{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:3rem;text-align:center;font-size:8rem}
+.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+.value-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center}
+.value-card div:first-child{font-size:2rem;margin-bottom:0.75rem}
+.value-card h4{font-weight:700;margin-bottom:0.5rem}
+.value-card p{color:var(--gray);font-size:0.85rem}
+@media(max-width:700px){.about-grid{grid-template-columns:1fr}.value-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo" onclick="showPage('home')">TAUK ON</div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a onclick="showPage('menu')" id="nav-menu">Menu</a></li>
+    <li><a onclick="showPage('deals')" id="nav-deals">Deals</a></li>
+    <li><a onclick="showPage('about')" id="nav-about">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 Cart <div class="cart-count" id="cart-count">0</div>
+    </button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-bg">
+      <div class="fire-ring"></div>
+      <div class="fire-ring"></div>
+      <div class="fire-ring"></div>
+    </div>
+    <div style="position:relative;z-index:1">
+      <div class="hero-badge">🔥 Now Open · Tbilisi, Georgia</div>
+      <h1 class="bebas">TAUK<br><span>ON</span></h1>
+      <p class="hero-sub">Burgers · Pizza · Shawarma · Delivered Fast</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('menu')">Order Now 🔥</button>
+        <button class="btn-outline" onclick="showPage('deals')">See Deals 🎁</button>
+      </div>
+      <div class="food-float">
+        <div class="food-chip" onclick="showMenuCat('Burgers')">🍔 Burgers</div>
+        <div class="food-chip" onclick="showMenuCat('Pizza')">🍕 Pizza</div>
+        <div class="food-chip" onclick="showMenuCat('Shawarma')">🌯 Shawarma</div>
+        <div class="food-chip" onclick="showMenuCat('Fries')">🍟 Fries</div>
+        <div class="food-chip" onclick="showMenuCat('Drinks')">🥤 Drinks</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--black)">
+    <div class="stats">
+      <div class="stat"><div class="stat-num">50K+</div><div class="stat-label">Happy Customers</div></div>
+      <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label">Average Rating</div></div>
+      <div class="stat"><div class="stat-num">25min</div><div class="stat-label">Avg Delivery</div></div>
+      <div class="stat"><div class="stat-num">40+</div><div class="stat-label">Menu Items</div></div>
+    </div>
+  </div>
+
+  <!-- REVIEWS ON HOME -->
+  <section>
+    <div class="section-label">What People Say</div>
+    <div class="section-title">Customer Favorites</div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"TAUK ON-მა მაკი დამავიწყა 💀"</p>
+        <div class="reviewer"><div class="avatar">GK</div><div><div class="reviewer-name">Giorgi K.</div><div class="reviewer-sub">Tbilisi · 47 orders</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"ყველაფერი ცხელი მოვიდა respect"</p>
+        <div class="reviewer"><div class="avatar">NB</div><div><div class="reviewer-name">Nino B.</div><div class="reviewer-sub">Rustaveli · 23 orders</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"საქართველოში ასეთი fast food იშვიათია"</p>
+        <div class="reviewer"><div class="avatar">LA</div><div><div class="reviewer-name">Luka A.</div><div class="reviewer-sub">Vake · 61 orders</div></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- MENU PAGE -->
+<div id="page-menu" class="page">
+  <section style="padding-top:7rem">
+    <div class="live-bar">
+      <div class="live-dot"></div>
+      <span id="live-orders">17 orders being prepared right now</span>
+    </div>
+    <div class="section-label">Full Menu</div>
+    <div class="section-title">What Are You<br>Craving?</div>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="search-input" placeholder="Search — pepperoni pizza, shawarma..." oninput="filterMenu()">
+    </div>
+    <div class="categories" id="categories"></div>
+    <div class="menu-grid" id="menu-grid"></div>
+  </section>
+</div>
+
+<!-- DEALS PAGE -->
+<div id="page-deals" class="page">
+  <div class="deals-full" style="padding-top:7rem">
+    <div class="deals-inner">
+      <div class="section-label">Hot Right Now</div>
+      <div class="section-title">Today's Deals &<br>Specials</div>
+      <div class="deals-grid">
+        <div class="deal-card orange">
+          <div class="deal-badge">-30%</div>
+          <div class="deal-icon">🍔🍟🥤</div>
+          <div class="deal-title">Combo Meal Deal</div>
+          <div class="deal-desc">Classic Burger + Large Fries + Any Drink. The ultimate lunch combo.</div>
+          <div class="deal-timer-label">Deal ends in</div>
+          <div class="deal-timer" id="timer1">02:14:55</div>
+          <button class="btn-primary" style="margin-top:1rem;width:100%" onclick="addDeal('Combo Meal Deal',32)">Grab Deal — 32 GEL</button>
+        </div>
+        <div class="deal-card red">
+          <div class="deal-badge">STUDENT</div>
+          <div class="deal-icon">🎓</div>
+          <div class="deal-title">Student Discount</div>
+          <div class="deal-desc">Show your student ID and get 20% off your entire order every time.</div>
+          <div style="color:rgba(255,255,255,0.6);font-size:0.9rem;margin-top:1rem">Valid with student card · All day</div>
+          <button class="btn-outline" style="margin-top:1rem;width:100%;padding:0.7rem" onclick="showToast('Student deal applied! 🎓')">Apply Discount</button>
+        </div>
+        <div class="deal-card purple">
+          <div class="deal-badge">🌙 LATE</div>
+          <div class="deal-icon">🌙</div>
+          <div class="deal-title">Late Night Special</div>
+          <div class="deal-desc">Order after 10 PM and get free delivery + a mystery dessert.</div>
+          <div class="deal-timer-label">Tonight from</div>
+          <div style="font-family:'Bebas Neue',cursive;font-size:2rem;color:#a78bfa;letter-spacing:4px">22:00</div>
+          <button class="btn-outline" style="margin-top:1rem;width:100%;padding:0.7rem;border-color:rgba(139,92,246,0.5);color:#a78bfa" onclick="showToast('Reminder set for late night! 🌙')">Set Reminder</button>
+        </div>
+        <div class="deal-card orange" style="background:linear-gradient(135deg,rgba(255,196,0,0.12),rgba(255,122,0,0.08));border-color:rgba(255,196,0,0.3)">
+          <div class="deal-badge" style="background:var(--yellow);color:var(--black)">FAMILY</div>
+          <div class="deal-icon">👨‍👩‍👧‍👦</div>
+          <div class="deal-title">Family Pizza Bundle</div>
+          <div class="deal-desc">2 large pizzas + 8 garlic bites + 4 drinks. Feed the whole crew.</div>
+          <div class="deal-timer-label">Weekend only · Deal ends in</div>
+          <div class="deal-timer" id="timer2">18:44:10</div>
+          <button class="btn-primary" style="margin-top:1rem;width:100%;background:linear-gradient(135deg,#ffc400,#ff9900)" onclick="addDeal('Family Pizza Bundle',75)">Grab Deal — 75 GEL</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="page-about" class="page">
+  <section style="padding-top:7rem">
+    <div class="section-label">Our Story</div>
+    <div class="section-title">Georgian Energy.<br>Street Food Soul.</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>TAUK ON was born on the streets of Tbilisi — a city where food isn't just fuel, it's culture, community, and conversation. We took everything we love about Georgian street food and gave it a modern, fast-food edge.</p>
+        <p>Every burger, every pizza, every shawarma is made fresh — never frozen, never rushed (well, fast, but fresh). We source local ingredients, work with local suppliers, and believe that fast food should feel like a real meal.</p>
+        <p>"TAUK ON" means "keep going" in our team's language — and that's the energy we bring every single day.</p>
+        <div style="margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap">
+          <button class="btn-primary" onclick="showPage('menu')">Order Now</button>
+          <button class="btn-outline">Contact Us</button>
+        </div>
+      </div>
+      <div class="about-img">🏙️</div>
+    </div>
+    <div style="margin-top:3rem">
+      <div class="section-label">Our Values</div>
+      <div class="value-grid">
+        <div class="value-card"><div>🔥</div><h4>Always Fresh</h4><p>Made to order, every time. No heat lamps, no waiting trays.</p></div>
+        <div class="value-card"><div>⚡</div><h4>Lightning Fast</h4><p>25 minutes average delivery. We don't believe in waiting.</p></div>
+        <div class="value-card"><div>🇬🇪</div><h4>Georgian Roots</h4><p>Born and raised in Tbilisi. Proud of where we came from.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CART -->
+<div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+<div class="cart-panel" id="cart-panel">
+  <div class="cart-header">
+    <h2>Your Order</h2>
+    <button class="close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-footer" id="cart-footer"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<footer>
+  <div class="footer-logo">TAUK ON</div>
+  <div class="social-row">
+    <div class="social-icon">📘</div>
+    <div class="social-icon">📸</div>
+    <div class="social-icon">🐦</div>
+    <div class="social-icon">📱</div>
+  </div>
+  <div class="footer-links">
+    <a onclick="showPage('home')">Home</a>
+    <a onclick="showPage('menu')">Menu</a>
+    <a onclick="showPage('deals')">Deals</a>
+    <a onclick="showPage('about')">About</a>
+    <a>Careers</a>
+    <a>Franchise</a>
+    <a>Contact</a>
+  </div>
+  <div class="footer-copy">© 2025 TAUK ON · Georgian Fast Food · Tbilisi, Georgia · All rights reserved</div>
+</footer>
+
+<script>
+const menuData = [
+  {id:1,cat:'Burgers',name:'Classic Smash Burger',desc:'Double smash patty, cheddar, pickles, special TAUK sauce, brioche bun',price:18,cal:620,spice:0,emoji:'🍔',tags:['bestseller']},
+  {id:2,cat:'Burgers',name:'Spicy Inferno Burger',desc:'Triple patty, ghost pepper sauce, jalapeños, crispy onions, pepper jack',price:24,cal:780,spice:3,emoji:'🌶️',tags:['hot','bestseller']},
+  {id:3,cat:'Burgers',name:'BBQ Mushroom Burger',desc:'Grilled portobello, smoked gouda, caramelized onion, truffle mayo',price:16,cal:510,spice:0,emoji:'🍔',tags:['veg','new']},
+  {id:4,cat:'Burgers',name:'Georgian Special',desc:'Lamb patty, tkemali sauce, suluguni cheese, roasted pepper',price:22,cal:680,spice:1,emoji:'🍔',tags:['new','bestseller']},
+  {id:5,cat:'Pizza',name:'Pepperoni Fire',desc:'San Marzano base, double pepperoni, mozzarella, chili flakes, fresh basil',price:26,cal:890,spice:1,emoji:'🍕',tags:['bestseller']},
+  {id:6,cat:'Pizza',name:'4-Cheese Dream',desc:'Mozzarella, gorgonzola, parmesan, ricotta, honey drizzle',price:24,cal:850,spice:0,emoji:'🍕',tags:[]},
+  {id:7,cat:'Pizza',name:'BBQ Chicken Pizza',desc:'Smoky BBQ base, grilled chicken, red onion, jalapeño, coriander',price:23,cal:760,spice:1,emoji:'🍕',tags:['new']},
+  {id:8,cat:'Shawarma',name:'Classic Chicken Shawarma',desc:'Grilled chicken, garlic sauce, pickled veg, fries inside, lavash',price:14,cal:560,spice:0,emoji:'🌯',tags:['bestseller']},
+  {id:9,cat:'Shawarma',name:'Meat Shawarma Royale',desc:'Beef & lamb mix, tahini, tomatoes, onion, spice blend, thick lavash',price:17,cal:690,spice:2,emoji:'🌯',tags:['hot']},
+  {id:10,cat:'Shawarma',name:'Falafel Wrap',desc:'Crispy falafel, hummus, cucumber, tomato, pickled cabbage, tahini',price:13,cal:480,spice:0,emoji:'🌯',tags:['veg']},
+  {id:11,cat:'Fries',name:'Classic Fries',desc:'Golden crispy, sea salt, ketchup & mayo on the side',price:6,cal:380,spice:0,emoji:'🍟',tags:[]},
+  {id:12,cat:'Fries',name:'TAUK Loaded Fries',desc:'Cheese sauce, crispy bacon, jalapeño, spring onion, sour cream',price:11,cal:650,spice:1,emoji:'🍟',tags:['bestseller']},
+  {id:13,cat:'Chicken',name:'Crispy Chicken Box',desc:'6-piece crispy tenders, coleslaw, honey mustard, fries',price:16,cal:820,spice:0,emoji:'🍗',tags:['bestseller']},
+  {id:14,cat:'Chicken',name:'Spicy Wings (8pc)',desc:'Sticky buffalo glaze, blue cheese dip, celery sticks',price:14,cal:560,spice:2,emoji:'🍗',tags:['hot']},
+  {id:15,cat:'Drinks',name:'Classic Lemonade',desc:'Fresh squeezed, house-made, with mint and ice',price:5,cal:120,spice:0,emoji:'🥤',tags:['new']},
+  {id:16,cat:'Drinks',name:'Georgian Tarragon Soda',desc:'Classic green tarhuni, ice cold, fizzy — a Tbilisi staple',price:4,cal:80,spice:0,emoji:'🥤',tags:[]},
+  {id:17,cat:'Desserts',name:'TAUK Brownie',desc:'Warm chocolate fudge brownie, vanilla ice cream, caramel drizzle',price:8,cal:420,spice:0,emoji:'🍫',tags:['new']},
+  {id:18,cat:'Desserts',name:'Churros & Dip',desc:'Hot cinnamon churros, dulce de leche & chocolate dipping sauces',price:9,cal:380,spice:0,emoji:'🍩',tags:['bestseller']},
+];
+
+const categories = ['All','Burgers','Pizza','Shawarma','Chicken','Fries','Drinks','Desserts'];
+let activeCat = 'All';
+let cart = [];
+let searchQ = '';
+
+function renderCategories(){
+  const el = document.getElementById('categories');
+  el.innerHTML = categories.map(c=>`<button class="cat-btn ${c===activeCat?'active':''}" onclick="setCat('${c}')">${c}</button>`).join('');
+}
+
+function setCat(c){activeCat=c;renderCategories();renderMenu()}
+function filterMenu(){searchQ=document.getElementById('search-input').value.toLowerCase();renderMenu()}
+
+function spiceStr(n){if(!n)return'';return'🌶️'.repeat(n)}
+function tagEl(t){const m={bestseller:'tag-bestseller',new:'tag-new',hot:'tag-hot',veg:'tag-veg'};return`<span class="tag ${m[t]||''}">${t==='bestseller'?'🏆 Best Seller':t==='new'?'✨ New':t==='hot'?'🔥 Hot':t==='veg'?'🌿 Veg':t}</span>`}
+
+function renderMenu(){
+  const grid = document.getElementById('menu-grid');
+  let items = menuData;
+  if(activeCat!=='All') items=items.filter(i=>i.cat===activeCat);
+  if(searchQ) items=items.filter(i=>i.name.toLowerCase().includes(searchQ)||i.desc.toLowerCase().includes(searchQ)||i.cat.toLowerCase().includes(searchQ));
+  grid.innerHTML = items.map(item=>`
+    <div class="food-card">
+      <div class="food-img">${item.emoji}</div>
+      <div class="food-body">
+        <div class="food-tags">${item.tags.map(tagEl).join('')}</div>
+        <div class="food-name">${item.name}</div>
+        <div class="food-desc">${item.desc}</div>
+        <div class="spice">${item.cal} kcal ${spiceStr(item.spice)}</div>
+        <div class="food-footer" style="margin-top:1rem">
+          <div class="food-price">${item.price} <span>GEL</span></div>
+          <button class="add-btn" onclick="addToCart(${item.id})">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addToCart(id){
+  const item = menuData.find(i=>i.id===id);
+  const existing = cart.find(c=>c.id===id);
+  if(existing) existing.qty++;
+  else cart.push({...item,qty:1});
+  updateCartCount();
+  showToast(`${item.emoji} ${item.name} added to cart!`);
+  renderCart();
+}
+
+function addDeal(name,price){
+  const existing = cart.find(c=>c.name===name);
+  if(existing) existing.qty++;
+  else cart.push({id:'deal_'+name,name,price,qty:1,emoji:'🎁',cat:'Deal'});
+  updateCartCount();
+  showToast(`🎁 ${name} added to cart!`);
+  renderCart();
+  toggleCart();
+}
+
+function removeFromCart(id){cart=cart.filter(c=>c.id!==id);updateCartCount();renderCart()}
+function changeQty(id,d){
+  const item=cart.find(c=>c.id===id);
+  if(item){item.qty+=d;if(item.qty<=0)removeFromCart(id);}
+  updateCartCount();renderCart();
+}
+
+function updateCartCount(){
+  const total=cart.reduce((a,c)=>a+c.qty,0);
+  document.getElementById('cart-count').textContent=total;
+}
+
+function renderCart(){
+  const container=document.getElementById('cart-items');
+  const footer=document.getElementById('cart-footer');
+  if(!cart.length){
+    container.innerHTML=`<div class="empty-cart"><div>🛒</div><p>Your cart is empty</p><p style="font-size:0.85rem;margin-top:0.5rem">Add something delicious!</p></div>`;
+    footer.innerHTML='';
+    return;
+  }
+  container.innerHTML=cart.map(item=>`
+    <div class="cart-item">
+      <div class="cart-emoji">${item.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">${item.price*item.qty} GEL</div>
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty('${item.id}',-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty('${item.id}',1)">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  const subtotal=cart.reduce((a,c)=>a+c.price*c.qty,0);
+  const delivery=3;
+  footer.innerHTML=`
+    <div class="promo-row">
+      <input class="promo-input" placeholder="Promo code...">
+      <button class="promo-apply" onclick="showToast('Promo code applied! 🎉')">Apply</button>
+    </div>
+    <div class="total-row"><span>Subtotal</span><span>${subtotal} GEL</span></div>
+    <div class="total-row"><span>Delivery</span><span>${delivery} GEL</span></div>
+    <div class="total-final"><span>Total</span><span>${subtotal+delivery} GEL</span></div>
+    <button class="checkout-btn" onclick="checkout()">🔥 Place Order</button>
+  `;
+}
+
+function checkout(){
+  cart=[];updateCartCount();renderCart();toggleCart();
+  showToast('✅ Order placed! Cooking now... 25–35 min 🔥');
+}
+
+function toggleCart(){
+  document.getElementById('cart-panel').classList.toggle('open');
+  document.getElementById('cart-overlay').classList.toggle('open');
+}
+
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  document.getElementById('nav-'+p).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showMenuCat(cat){
+  showPage('menu');
+  setCat(cat);
+}
+
+// Timers
+function countdown(id, secs){
+  let s = secs;
+  setInterval(()=>{
+    s=Math.max(0,s-1);
+    const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+    const el=document.getElementById(id);
+    if(el) el.textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+  },1000);
+}
+countdown('timer1',7895);
+countdown('timer2',67450);
+
+// Live orders counter
+setInterval(()=>{
+  const n=Math.floor(Math.random()*8)+12;
+  const el=document.getElementById('live-orders');
+  if(el) el.textContent=`${n} orders being prepared right now`;
+},5000);
+
+// Init
+renderCategories();
+renderMenu();
+renderCart();
+</script>
+</body>
+</html>
